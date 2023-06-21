@@ -1,4 +1,4 @@
-function solve(num) {
+function multiplyByTwo(num) {
     console.log(num * 2);
 }
 
