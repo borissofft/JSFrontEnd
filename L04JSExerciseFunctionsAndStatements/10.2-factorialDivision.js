@@ -20,4 +20,4 @@ function factorialDivision(x, y) {
 }
 
 factorialDivision(5, 2);
-// factorialDivision(6, 2);
+factorialDivision(6, 2);
