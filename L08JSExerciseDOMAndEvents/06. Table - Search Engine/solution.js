@@ -4,13 +4,14 @@ function solve() {
    function onClick() {
 
       const searchQuery = document.querySelector("#searchField").value;
-      const cels = Array.from(document.querySelectorAll("tbody td"));
+      const cells = Array.from(document.querySelectorAll("tbody td"));
+      const activeRows = Array.from(document.querySelectorAll("tbody tr.select"));
 
-      cels.forEach(cell => {
-         if (cell.textContent.includes(searchQuery)) {
-            
-         }
-      })
+      activeRows.forEach(row => row.classList.remove("select"));
+
+      cells
+         .filter(cell => cell.textContent.includes(searchQuery))
+         .forEach(cell => cell.parentElement.classList.add("select"))
 
    }
 }
