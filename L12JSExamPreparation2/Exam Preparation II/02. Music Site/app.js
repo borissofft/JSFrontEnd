@@ -32,7 +32,7 @@ function solve() {
 
         const song = {
             id: Object.values(songs).length + 1,
-            genere: inputSelectors.genre.value,
+            genre: inputSelectors.genre.value,
             name: inputSelectors.name.value,
             author: inputSelectors.author.value,
             date: inputSelectors.date.value,
@@ -46,7 +46,7 @@ function solve() {
         image.setAttribute("src", "./static/img/img.png");
         div.appendChild(image);
 
-        createElement("h2", `Genre: ${song.genere}`, null, null, div);
+        createElement("h2", `Genre: ${song.genre}`, null, null, div);
         createElement("h2", `Name: ${song.name}`, null, null, div);
         createElement("h2", `Author: ${song.author}`, null, null, div);
         createElement("h3", `Date: ${song.date}`, null, null, div);
