@@ -40,11 +40,34 @@ async function loadProducts(e) {
 
         const buttonContainer = createElement("td", null, ["btn"], null, tableRowContainer);
         const updateButton = createElement("button", "Update", ["update"], p._id, buttonContainer);
-        updateButton.addEventListener("click", (e) => {
+        updateButton.addEventListener("click", async (e) => {
+
             Object.keys(inputSelectors).forEach(key => {
                 const selector = inputSelectors[key];
                 selector.value = products[p._id][key];
             });
+
+            addProductButton.disabled = true;
+            updateProductButton.disabled = false;
+            updateProductButton.addEventListener("click", async (e) => {
+
+                const productToEdit = {
+                    product: inputSelectors.product.value,
+                    count: inputSelectors.count.value,
+                    price: inputSelectors.price.value,
+                }
+
+                await fetch(`${API_URL}/${p._id}`, {
+                    method: "PATCH",
+                    body: JSON.stringify(productToEdit),
+                });
+
+                Object.values(inputSelectors).forEach(selector => selector.value = "");
+                loadProducts(e);
+
+            });
+
+
         });
 
         const deleteButton = createElement("button", "Delete", ["delete"], p._id, buttonContainer);
@@ -52,7 +75,7 @@ async function loadProducts(e) {
             await fetch(`${API_URL}/${p._id}`, {
                 method: "DELETE",
             });
-    
+
             await loadProducts();
         });
 
@@ -101,7 +124,7 @@ async function addProduct(e) {
 //     await fetch(`${API_URL}/${searchedProduct._id}`, {
 //         method: "DELETE"
 //     });
-    
+
 //     await loadProducts(e);
 // }
 
