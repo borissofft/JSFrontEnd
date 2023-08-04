@@ -60,14 +60,16 @@ async function loadTasks() {
 
                 let method = "PATCH";
                 let body = JSON.stringify({
+                    ...task,
                     status: statusMoveToNext[task.status]
                 });
-            
-                fetch(`${API_URL}/${task._id}`, {
+
+                await fetch(`${API_URL}/${task._id}`, {
                     method: method,
                     body: body,
                 })
-                    .then(loadTasks(e));
+
+                await loadTasks(e);
 
             });
         } else {
@@ -101,10 +103,9 @@ function addTasks() {
     fetch(API_URL, {
         method: "POST",
         body: JSON.stringify(task),
-    })
-        .then(loadTasks());
+    }).then(loadTasks(),);
 
-    Object.values(inputSelectors).forEach(selector => selector.value = "")
+    Object.values(inputSelectors).forEach(selector => selector.value = "");
 
 }
 
