@@ -40,7 +40,7 @@ async function loadProducts(e) {
 
         const buttonContainer = createElement("td", null, ["btn"], null, tableRowContainer);
         const updateButton = createElement("button", "Update", ["update"], p._id, buttonContainer);
-        updateButton.addEventListener("click", async (e) => {
+        updateButton.addEventListener("click", (e) => {
 
             Object.keys(inputSelectors).forEach(key => {
                 const selector = inputSelectors[key];
@@ -63,10 +63,11 @@ async function loadProducts(e) {
                 });
 
                 Object.values(inputSelectors).forEach(selector => selector.value = "");
+                addProductButton.disabled = false;
+                updateProductButton.disabled = true;
                 loadProducts(e);
 
             });
-
 
         });
 
