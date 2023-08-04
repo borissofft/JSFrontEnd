@@ -56,15 +56,28 @@ async function loadTasks() {
         const moveButton = createElement("button", statusToNextStatusMap[task.status], null, task._id, listContainer);
         if (task.status !== "Done") {
             moveButton.textContent = statusToNextStatusMap[task.status];
-            moveButton.addEventListener("click", moveTask);
+            moveButton.addEventListener("click", async (e) => {
+
+                let method = "PATCH";
+                let body = JSON.stringify({
+                    status: statusMoveToNext[task.status]
+                });
+            
+                fetch(`${API_URL}/${task._id}`, {
+                    method: method,
+                    body: body,
+                })
+                    .then(loadTasks(e));
+
+            });
         } else {
             moveButton.textContent = "Close";
             moveButton.addEventListener("click", (e) => {
-            
+
                 fetch(`${API_URL}/${task._id}`, {
                     method: "DELETE",
                 });
-            
+
                 loadTasks(e);
             });
         }
@@ -73,7 +86,7 @@ async function loadTasks() {
     });
 }
 
-async function addTasks() {
+function addTasks() {
 
     if (Object.values(inputSelectors).some(input => input.value === "")) {
         return;
@@ -85,34 +98,32 @@ async function addTasks() {
         status: "ToDo",
     }
 
-    await fetch(API_URL, {
+    fetch(API_URL, {
         method: "POST",
         body: JSON.stringify(task),
-    });
+    })
+        .then(loadTasks());
 
-    Object.values(inputSelectors).forEach(selector => selector.value = "");
-    await loadTasks();
-
-}
-
-async function moveTask(e) {
-
-    const taskId = e.currentTarget.getAttribute("id");
-    const task = tasks[taskId];
-    let method = "PATCH";
-    let body = JSON.stringify({
-        ...task,
-        status: statusMoveToNext[task.status],
-    });
-
-    await fetch(`${API_URL}/${task._id}`, {
-        method: method,
-        body: body,
-    });
-
-    await loadTasks(e);
+    Object.values(inputSelectors).forEach(selector => selector.value = "")
 
 }
+
+// async function moveTask(e) {
+
+//     const taskId = e.currentTarget.getAttribute("id");
+//     const task = tasks[taskId];
+//     let method = "PATCH";
+//     let body = JSON.stringify({
+//         status: statusMoveToNext[task.status]
+//     });
+
+//     fetch(`${API_URL}/${task._id}`, {
+//         method: method,
+//         body: body,
+//     })
+//         .then(loadTasks(e));
+
+// }
 
 function createElement(type, textContent, classes, id, parent, useInnerHTML) {
     const element = document.createElement(type);
