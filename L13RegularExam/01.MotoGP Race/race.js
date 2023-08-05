@@ -36,10 +36,17 @@ function solve(input) {
             }
             case "Overtaking": {
                 const [firstRider, secondRider] = rest;
-                const firstRiderPosition = riders.indexOf(firstRider);
-                const secondRiderPosition = riders.indexOf(secondRider);
-                if () {
 
+                const rider1 = riders[firstRider].find(r => r.position);
+                const firstRiderPosition = Number(rider1.position);
+
+                const rider2 = riders[secondRider].find(r => r.position);
+                const secondRiderPosition = Number(rider2.position);
+
+                if (firstRiderPosition < secondRiderPosition) {
+                    
+
+                    console.log(`${firstRider} overtook ${secondRider}!`);
                 }
                 break;
             }
