@@ -56,7 +56,7 @@ async function loadTasks(e) {
             selectors.editButton.addEventListener("click", async (e) => {
 
                 const taskToEdit = {
-                    // id: task._id,
+                    id: task._id,
                     name: inputSelectors.name.value,
                     days: inputSelectors.days.value,
                     date: inputSelectors.date.value,
@@ -65,12 +65,12 @@ async function loadTasks(e) {
                 await fetch(`${API_URL}/${task._id}`, {
                     method: "PUT",
                     body: JSON.stringify(taskToEdit),
-                })
+                });
 
                 Object.values(inputSelectors).forEach(selector => selector.value = "");
                 selectors.editButton.disabled = true;
                 selectors.addButton.disabled = false;
-                await loadTasks(e);
+                loadTasks(e);
 
             });
 
