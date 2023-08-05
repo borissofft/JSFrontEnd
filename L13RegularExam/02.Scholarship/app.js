@@ -47,7 +47,7 @@ function solve() {
 
     const applyButton = createElement("button", "apply", ["action-btn"], task.id, list);
     applyButton.classList.add(["apply"]);
-    
+    applyButton.addEventListener("click", deleteTask);
 
     selectors.previewContainer.appendChild(list);
 
@@ -70,6 +70,20 @@ function solve() {
     currentTask.remove();
 
     selectors.nextButton.disabled = false;
+
+  }
+
+  function deleteTask(e) {
+    
+    const taskId = e.currentTarget.getAttribute("id");
+
+    const taskElement = document.querySelector(".application");
+
+    taskElement.querySelector("button").remove();
+    taskElement.querySelector("button").remove();
+
+    selectors.candidateContainer.appendChild(taskElement);
+    delete tasks[taskId];
 
   }
 
