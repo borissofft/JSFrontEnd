@@ -12,7 +12,9 @@ function solve() {
 
   const selectors = {
     createTaskButton: document.querySelector("#add-btn"),
+    clearButton: document.querySelector(".btn clear"),
     sureListContainer: document.querySelector("#sure-list"),
+    scoreboardListContainer: document.querySelector("#scoreboard-list"),
   };
 
   selectors.createTaskButton.addEventListener("click", createTask);
@@ -46,6 +48,7 @@ function solve() {
 
     const okButton = createElement("button", "ok", ["btn"], task.id, list);
     okButton.classList.add(["ok"]);
+    okButton.addEventListener("click", moveTask);
 
     selectors.sureListContainer.appendChild(list);
 
@@ -71,6 +74,30 @@ function solve() {
     selectors.createTaskButton.disabled = false;
 
   }
+
+  function moveTask(e) {
+
+    const taskId = e.currentTarget.getAttribute("id");
+
+    const taskElement = document.querySelector(".dart-item");
+
+    taskElement.querySelector("button").remove();
+    taskElement.querySelector("button").remove();
+
+    selectors.createTaskButton.disabled = false;
+
+    // selectors.clearButton.addEventListener("click", reloadApp);
+
+    selectors.scoreboardListContainer.appendChild(taskElement);
+    delete tasks[taskId];
+    
+  }
+
+  // function reloadApp(e) {
+
+  //   e.currentTarget.setAttribute("type", "button");
+    
+  // }
 
 
 
